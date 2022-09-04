@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../services/service_ingreso.dart';
 
 class SPage extends StatelessWidget {
   const SPage({super.key});

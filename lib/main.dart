@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:visualizador_eventos/pages/login_page.dart';
+import 'package:visualizador_eventos/pages/sigin_page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -13,7 +14,8 @@ class MyApp extends StatelessWidget {
       title: 'Material App',
       initialRoute: "login",
       routes: {
-        "login" :(context) => const LoginPage()
+        "login" :(context) => const LoginPage(),
+        "register":(context) => const SiginPage()
       },
     );
 
