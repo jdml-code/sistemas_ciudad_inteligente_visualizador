@@ -11,4 +11,3 @@ class LoginPage extends StatelessWidget {
       body: LoginWidget());
   }
 }
-

@@ -6,6 +6,8 @@ class SiginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: SPage());
+    return const Scaffold(
+      backgroundColor: Color.fromARGB(170, 24, 117, 209),
+      body: SPage());
   }
 }

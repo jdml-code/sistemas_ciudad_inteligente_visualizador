@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:visualizador_eventos/widgets/tituloVista_widget.dart';
+import 'package:visualizador_eventos/widgets/titulo_widget.dart';
 
 class LoginWidget extends StatelessWidget {
   LoginWidget({super.key});
@@ -14,25 +16,8 @@ class LoginWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              "Iniciar sesión", 
-              style: TextStyle(
-                color: Colors.white, 
-                fontSize: 30, 
-                fontWeight: FontWeight.bold),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 40),
-                  child: Row(
-                    
-                    children: const [
-                      Icon(Icons.person),
-                      Text(
-                        "Usario",
-                        ),
-                    ],
-                  ),
-                ),
+            const TituloVista(mensaje: 'Iniciar Sesión'),
+                const TituloWidget(mensaje: 'Usuario', icono: Icon(Icons.person)),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                   child: TextField(
@@ -53,6 +38,7 @@ class LoginWidget extends StatelessWidget {
                     ),
                   ),
                 ),
+                const TituloWidget(mensaje: 'Contraseña', icono: Icon(Icons.lock)),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                   child: TextField(
@@ -78,7 +64,8 @@ class LoginWidget extends StatelessWidget {
                       ),
                       onPressed: (){
                       },
-                      child: const Text("Ingresar")),
+                      child: const Text("Ingresar",
+                      style: TextStyle(fontSize: 20),)),
                   ),
                   ),
                   Row(
@@ -105,3 +92,6 @@ class LoginWidget extends StatelessWidget {
     );
   }
 }
+
+
+

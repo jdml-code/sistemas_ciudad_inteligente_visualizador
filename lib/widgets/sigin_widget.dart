@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:visualizador_eventos/widgets/tituloVista_widget.dart';
+import 'package:visualizador_eventos/widgets/titulo_widget.dart';
 import '../services/service_ingreso.dart';
+import 'ingresoDato_widget.dart';
 
 class SPage extends StatelessWidget {
   const SPage({super.key});
@@ -19,7 +22,7 @@ class SiginWidget extends StatelessWidget {
 
   final TextEditingController userController = TextEditingController();
   final TextEditingController passController = TextEditingController();
-  final TextEditingController correocontroller = TextEditingController();
+  final TextEditingController correoController = TextEditingController();
   final TextEditingController confirmar = TextEditingController();
 
   @override
@@ -35,107 +38,13 @@ class SiginWidget extends StatelessWidget {
           width: double.infinity,
           child: Column(
             children: [
-              const Text(
-                "Registrate",
-                style: TextStyle(color: Colors.white, fontSize: 50),
-              ),
-
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 40.0, vertical: 2.0),
-                child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Row(children: const [
-                      Icon(Icons.person, color: Colors.black),
-                      Text("Nombre", style: TextStyle(color: Colors.white)),
-                    ])),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 40.0, vertical: 10.0),
-                child: TextField(
-                  controller: userController,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Ingrese su nombre"),
-                ),
-              ),
-
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 40.0, vertical: 2.0),
-                child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Row(children: const [
-                      Icon(Icons.mail, color: Colors.black),
-                      Text("Correo", style: TextStyle(color: Colors.white)),
-                    ])),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 40.0, vertical: 10.0),
-                child: TextField(
-                  //onChanged: (value){
-                  // },
-                  //se usa normalmente como buscador mientras la persona va escribien el va buscando
-                  //tambien para guardar el valor en una variable
-
-                  controller: correocontroller,
-                  obscureText: false,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Ingrese su correo"),
-                ),
-              ), //texto //texto
-
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 40.0, vertical: 2.0),
-                child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Row(children: const [
-                      Icon(Icons.password, color: Colors.black),
-                      Text("Contraseña", style: TextStyle(color: Colors.white)),
-                    ])),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 40.0, vertical: 10.0),
-                child: TextField(
-                  obscureText: true,
-                  keyboardType: TextInputType.number,
-                  controller: passController,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Cree su contraseña"),
-                ),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 40.0, vertical: 2.0),
-                child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Row(children: const [
-                      Icon(Icons.password, color: Colors.black),
-                      Text("Confirmar", style: TextStyle(color: Colors.white)),
-                    ])),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 40.0, vertical: 10.0),
-                child: TextField(
-                  obscureText: true,
-                  keyboardType: TextInputType.emailAddress,
-                  controller: confirmar,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Confirma Contraseña"),
-                ),
-              ),
-
+              const TituloVista(mensaje: 'Registrarse'),
+              const TituloWidget(mensaje: 'Nombre', icono: Icon(Icons.person)),
+              IngresoDato(varController: userController, autocorrector: false, ocultarTexto: false, mensaje: "Ingrese su nombre", tipoTeclado: TextInputType.text),
+              const TituloWidget(mensaje: 'Correo', icono: Icon(Icons.mail)),
+              IngresoDato(varController: correoController, autocorrector: false, ocultarTexto: false, mensaje: "Ingrese su correo", tipoTeclado: TextInputType.emailAddress),
+              const TituloWidget(mensaje: 'Contraseña', icono: Icon(Icons.password)),
+              IngresoDato(varController: passController, autocorrector: false, ocultarTexto: true, mensaje: "Ingrese su contraseña", tipoTeclado: TextInputType.visiblePassword),
               Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 40.0, vertical: 10.0),
@@ -147,9 +56,10 @@ class SiginWidget extends StatelessWidget {
                             primary: const Color.fromARGB(255, 144, 202, 249)),
                         onPressed: () {
                           ingresoService.registro(userController.text,
-                              passController.text, correocontroller.text);
+                              passController.text, correoController.text);
                         },
-                        child: const Text("Crear cuenta")),
+                        child: const Text("Crear cuenta",
+                        style: TextStyle(fontSize: 20),)),
                   )),
 
               Row(
@@ -157,8 +67,9 @@ class SiginWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center, //para centralo
                 children: [
                   const Text(
-                    "Ya tengo cuenta",
-                    style: TextStyle(color: Colors.white, fontSize: 20),
+                    "Ya tengo una cuenta",
+                    style: TextStyle(color: Colors.white, fontSize: 20, 
+                            fontWeight: FontWeight.bold),
                   ),
                   TextButton(
                     onPressed: () {
@@ -169,6 +80,7 @@ class SiginWidget extends StatelessWidget {
                         style: TextStyle(
                             color: Color.fromARGB(255, 144, 202, 249),
                             fontSize: 30,
+                            decoration: TextDecoration.underline,
                             fontWeight: FontWeight.bold)),
                   )
                 ],
@@ -180,3 +92,4 @@ class SiginWidget extends StatelessWidget {
     );
   }
 }
+
