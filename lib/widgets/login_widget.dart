@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:visualizador_eventos/widgets/ingresoDato_widget.dart';
 import 'package:visualizador_eventos/widgets/tituloVista_widget.dart';
 import 'package:visualizador_eventos/widgets/titulo_widget.dart';
 
@@ -18,41 +19,9 @@ class LoginWidget extends StatelessWidget {
           children: [
             const TituloVista(mensaje: 'Iniciar Sesión'),
                 const TituloWidget(mensaje: 'Usuario', icono: Icon(Icons.person)),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                  child: TextField(
-                    // onChanged: (value) {
-                      // para no utilizar controller sino el value.
-                      // se debe asignar a una variable
-                    // },
-                    autocorrect: false,
-                    controller: userController,
-                    decoration: const InputDecoration(
-                      fillColor: Color.fromARGB(255, 195, 253, 255),
-                      filled: true,
-                      // prefix: Icon(Icons.person, color: Colors.black,),
-                      border: OutlineInputBorder(),
-                      hintText: "Ingrese su usuario"
-                      // labelText: "Ingrese su usuario"
-
-                    ),
-                  ),
-                ),
+                IngresoDato(varController: userController, autocorrector: false, ocultarTexto: false, mensaje: "Ingrese su usuario", tipoTeclado: TextInputType.text),
                 const TituloWidget(mensaje: 'Contraseña', icono: Icon(Icons.lock)),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                  child: TextField(
-                    controller: passController,
-                    obscureText: true, //ocultar contraseña
-                    decoration: const InputDecoration(
-                      fillColor: Color.fromARGB(255, 195, 253, 255),
-                      filled: true,
-                      prefix: Icon(Icons.lock, color: Colors.black,),
-                      border: OutlineInputBorder(),
-                      labelText: "Ingrese su contraseña"
-                    ),
-                  ),
-                ),
+                IngresoDato(varController: passController, autocorrector: false, ocultarTexto: true, mensaje: "Ingrese su contraseña", tipoTeclado: TextInputType.visiblePassword),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                   child: SizedBox(
