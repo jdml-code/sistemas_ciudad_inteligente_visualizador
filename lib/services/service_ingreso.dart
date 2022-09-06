@@ -1,10 +1,11 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
+import '../user_preferences/user_preferences.dart';
 
 class IngresoService {
   //clase de ingreso
   //creo diferntes metodos
+  final prefs = PreferenciasUsuario();
   final ip =
       "http://sistemic.udea.edu.co:4000/reto"; //variable genreal, todas la apis tiene el mismo ip
 
@@ -24,12 +25,19 @@ class IngresoService {
     request.headers.addAll(headers);
 
     //si el servicio se cae TRY C
-    http.StreamedResponse response = await request.send();
-    if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
-    } else {
-      print(response.reasonPhrase);
+    try {
+      http.StreamedResponse response = await request.send();
+      final Map<String, dynamic> decodedData = json.decode(await response.stream.bytesToString());
+      if (response.statusCode == 200) {
+        prefs.token = decodedData["access_token"];
+        print(prefs.token);
+      } else {
+        print(response.reasonPhrase);
+      }
+    } catch (e) {
+      print(e);
     }
+    
   }
 
   Future registro(String usuario, String password, String correo) async {
@@ -48,7 +56,23 @@ class IngresoService {
     } else {
       print(response.reasonPhrase);
     }
-
     //paso 2 confirmar con codigo al correo de verificaión
+  }
+
+  Future otp(String code, String username) async{
+    var request = http.MultipartRequest('POST', Uri.parse('$ip/reto/usuarios/registro/confirmar/$username'));
+    request.fields.addAll({
+      'codigo': code
+    });
+
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    }
+    else {
+      print(response.reasonPhrase);
+    }
   }
 }

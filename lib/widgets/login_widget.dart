@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:visualizador_eventos/services/service_ingreso.dart';
 import 'package:visualizador_eventos/widgets/ingresoDato_widget.dart';
 import 'package:visualizador_eventos/widgets/tituloVista_widget.dart';
 import 'package:visualizador_eventos/widgets/titulo_widget.dart';
+import '../user_preferences/user_preferences.dart';
 
 class LoginWidget extends StatelessWidget {
   LoginWidget({super.key});
@@ -11,6 +13,8 @@ class LoginWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final prefs = PreferenciasUsuario();
+    final ingresoServices = IngresoService();
     return SafeArea(
       child: SizedBox(
         width: double.infinity,
@@ -32,6 +36,7 @@ class LoginWidget extends StatelessWidget {
                         primary: const Color.fromARGB(255, 144, 202, 249)
                       ),
                       onPressed: (){
+                        ingresoServices.login(userController.text, passController.text);
                       },
                       child: const Text("Ingresar",
                       style: TextStyle(fontSize: 20),)),

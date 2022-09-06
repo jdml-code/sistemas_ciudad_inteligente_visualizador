@@ -4,16 +4,16 @@ import 'package:visualizador_eventos/widgets/titulo_widget.dart';
 import '../services/service_ingreso.dart';
 import 'ingresoDato_widget.dart';
 
-class SPage extends StatelessWidget {
-  const SPage({super.key});
+// class SPage extends StatelessWidget {
+//   const SPage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: const Color.fromARGB(170, 24, 117, 209),
-        body: SiginWidget());
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//         backgroundColor: const Color.fromARGB(170, 24, 117, 209),
+//         body: SiginWidget());
+//   }
+// }
 
 class SiginWidget extends StatelessWidget {
   SiginWidget({super.key});
@@ -30,6 +30,7 @@ class SiginWidget extends StatelessWidget {
     final ingresoService = IngresoService();
     return SafeArea(
       child: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         //ayuda a auna mejor viazualicaion en celular
         child: SizedBox(
           height: MediaQuery.of(context)
@@ -37,6 +38,7 @@ class SiginWidget extends StatelessWidget {
               .height, //reconoce el alto del dispositivo
           width: double.infinity,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const TituloVista(mensaje: 'Registrarse'),
               const TituloWidget(mensaje: 'Nombre', icono: Icon(Icons.person)),
@@ -57,6 +59,7 @@ class SiginWidget extends StatelessWidget {
                         onPressed: () {
                           ingresoService.registro(userController.text,
                               passController.text, correoController.text);
+                              Navigator.pushNamed(context, "otp", arguments: [userController.text, correoController.text]);
                         },
                         child: const Text("Crear cuenta",
                         style: TextStyle(fontSize: 20),)),
