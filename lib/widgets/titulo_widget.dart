@@ -15,7 +15,10 @@ class TituloWidget extends StatelessWidget {
       child: Row(
         children:[
           icono,
-          Text(mensaje, style: const TextStyle(color: Colors.white))
+          Text(mensaje, 
+          style: const TextStyle(color: Colors.white,
+          fontSize: 20, fontWeight: FontWeight.bold),
+          )
         ],
       ),
     );

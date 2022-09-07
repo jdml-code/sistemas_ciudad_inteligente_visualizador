@@ -10,10 +10,12 @@ class TituloVista extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       mensaje, 
+      textAlign: TextAlign.center,
       style: const TextStyle(
         color: Colors.white, 
-        fontSize: 30, 
+        fontSize: 50, 
         fontWeight: FontWeight.bold),
         );
   }
 }
+

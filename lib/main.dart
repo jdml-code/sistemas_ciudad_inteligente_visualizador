@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:visualizador_eventos/pages/login_page.dart';
 import 'package:visualizador_eventos/pages/otp_page.dart';
 import 'package:visualizador_eventos/pages/sigin_page.dart';
+import 'package:visualizador_eventos/pages/vistaApp_page.dart';
 import 'package:visualizador_eventos/user_preferences/user_preferences.dart';
 
 Future<void> main() async {
@@ -23,7 +24,8 @@ class MyApp extends StatelessWidget {
       routes: {
         "login" :(context) => const LoginPage(),
         "register":(context) => const SiginPage(),
-        "otp":(context) => const OTPPage()
+        "otp":(context) => const OTPPage(),
+        "vista":(context) => const VistaPage()
       },
     );
 

@@ -60,7 +60,7 @@ class IngresoService {
   }
 
   Future otp(String code, String username) async{
-    var request = http.MultipartRequest('POST', Uri.parse('$ip/reto/usuarios/registro/confirmar/$username'));
+    var request = http.MultipartRequest('POST', Uri.parse('$ip/usuarios/registro/confirmar/$username'));
     request.fields.addAll({
       'codigo': code
     });

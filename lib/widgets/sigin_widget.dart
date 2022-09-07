@@ -30,7 +30,7 @@ class SiginWidget extends StatelessWidget {
     final ingresoService = IngresoService();
     return SafeArea(
       child: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         //ayuda a auna mejor viazualicaion en celular
         child: SizedBox(
           height: MediaQuery.of(context)
@@ -45,7 +45,7 @@ class SiginWidget extends StatelessWidget {
               IngresoDato(varController: userController, autocorrector: false, ocultarTexto: false, mensaje: "Ingrese su nombre", tipoTeclado: TextInputType.text),
               const TituloWidget(mensaje: 'Correo', icono: Icon(Icons.mail)),
               IngresoDato(varController: correoController, autocorrector: false, ocultarTexto: false, mensaje: "Ingrese su correo", tipoTeclado: TextInputType.emailAddress),
-              const TituloWidget(mensaje: 'Contraseña', icono: Icon(Icons.password)),
+              const TituloWidget(mensaje: 'Contraseña', icono: Icon(Icons.lock)),
               IngresoDato(varController: passController, autocorrector: false, ocultarTexto: true, mensaje: "Ingrese su contraseña", tipoTeclado: TextInputType.visiblePassword),
               Padding(
                   padding: const EdgeInsets.symmetric(

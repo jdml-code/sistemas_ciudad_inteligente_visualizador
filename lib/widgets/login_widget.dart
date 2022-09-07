@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:visualizador_eventos/services/service_ingreso.dart';
 import 'package:visualizador_eventos/widgets/ingresoDato_widget.dart';
@@ -36,7 +37,8 @@ class LoginWidget extends StatelessWidget {
                         primary: const Color.fromARGB(255, 144, 202, 249)
                       ),
                       onPressed: (){
-                        ingresoServices.login(userController.text, passController.text);
+                        // ingresoServices.login(userController.text, passController.text);
+                        Navigator.pushNamed(context, "vista");
                       },
                       child: const Text("Ingresar",
                       style: TextStyle(fontSize: 20),)),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_field.dart';
+import 'package:otp_text_field/otp_field_style.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:visualizador_eventos/widgets/tituloVista_widget.dart';
 import 'package:visualizador_eventos/widgets/titulo_widget.dart';
@@ -24,10 +25,15 @@ class OTPWidget extends StatelessWidget {
           width: double.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const TituloVista(mensaje: 'Ingrese el código de verificación'),
+              const SizedBox(height: 25,),
               Text("El código de verificación fue enviado al correo: ${args[1]}"),
               OTPTextField(
+                otpFieldStyle: OtpFieldStyle(borderColor: Colors.white,
+                enabledBorderColor: Colors.white, disabledBorderColor: Colors.white,
+                focusBorderColor: Colors.white),
               length: 6,
               width: MediaQuery.of(context).size.width - 20,
               fieldWidth: 40,
@@ -35,7 +41,7 @@ class OTPWidget extends StatelessWidget {
                 fontSize: 17
               ),
               textFieldAlignment: MainAxisAlignment.spaceEvenly,
-              fieldStyle: FieldStyle.underline,
+              fieldStyle: FieldStyle.box,
               onCompleted: (pin) {
                 ingresoService.otp(pin, args[0]);
                 Navigator.pushNamed(context, "login");
