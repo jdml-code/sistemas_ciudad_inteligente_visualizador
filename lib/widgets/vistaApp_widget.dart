@@ -1,5 +1,6 @@
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../services/service_ingreso.dart';
 
@@ -69,12 +70,14 @@ class _VistaWidgetState extends State<VistaWidget> {
           ),
           body: TabBarView(
             children: VistaWidget.tabs.map((Tab tab) {
-              return Center(
-                child: Text(
-                  '${tab.text!} Tab',
-                  style: Theme.of(context).textTheme.headline5,
-                ),
-              );
+              return const Center(
+                child: GoogleMap(
+                        initialCameraPosition: CameraPosition(
+                          target: LatLng(0, 0),
+                          zoom: 12,
+                          )
+                        ),
+                );
             }).toList(),
           ),
         );
@@ -82,6 +85,14 @@ class _VistaWidgetState extends State<VistaWidget> {
     );
   }
 }
+
+
+// GoogleMap(
+//                         initialCameraPosition: CameraPosition(
+//                           target: LatLng(0, 0),
+//                           zoom: 12,
+//                           )
+//                         ),
   // Widget build(BuildContext context) {
     
     // final ingresoServices = IngresoService(); // crear la instaia
