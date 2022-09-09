@@ -38,7 +38,8 @@ class LoginWidget extends StatelessWidget {
                       ),
                       onPressed: (){
                         // ingresoServices.login(userController.text, passController.text);
-                        Navigator.pushNamed(context, "vista");
+                        Navigator.pushReplacementNamed(context, "vista"); //con este no deja regresar al formulario de login
+                        // sino que se cierra la app. Se puede controlar y poner otra ventana ¿Seguro que quiere salir?
                       },
                       child: const Text("Ingresar",
                       style: TextStyle(fontSize: 20),)),
