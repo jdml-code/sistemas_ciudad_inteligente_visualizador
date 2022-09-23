@@ -14,7 +14,7 @@ class MapController{
     final markerId = MarkerId(_markers.length.toString());
     final marker = Marker(
       markerId: markerId,
-      position: position
+      position: position,
     );
     _markers[markerId] = marker;
     

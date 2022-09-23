@@ -1,9 +1,16 @@
+import 'dart:async';
+
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:visualizador_eventos/pages/perfil_page.dart';
 import 'package:visualizador_eventos/widgets/map_widget.dart';
+import 'package:geolocator/geolocator.dart';
 
+
+import '../services/service_eventos.dart';
 import '../services/service_ingreso.dart';
+import '../user_preferences/user_preferences.dart';
 
 enum Menu { itemOne, itemTwo, itemThree, itemFour }
 
@@ -22,8 +29,13 @@ class VistaWidget extends StatefulWidget {
 
 class _VistaWidgetState extends State<VistaWidget> {
   String _selectedMenu = '';
+  final userEvents = Eventos();
+  final prefs = PreferenciasUsuario();
+  Completer<GoogleMapController> controllerMap = Completer();
+  
+  // Position? position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+  // Position? position = await Geolocator.getLastKnownPosition();
   LatLng positionUser = const LatLng(0, 0);
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -31,16 +43,17 @@ class _VistaWidgetState extends State<VistaWidget> {
       child: Scaffold(
         appBar: AppBar(
           bottom: TabBar(
-            onTap: (value){
-              print(value);
+            onTap: (value) async {
+              // print(value);
               if(value==0){
-                positionUser = const LatLng(6.23, -65);
+                positionUser = const LatLng(6.74, -62);
                 setState(() {
                 
               });
-              }
+              } 
               else if(value == 1){
-                positionUser = const LatLng(6.56, -63);
+                final GoogleMapController controller = await controllerMap.future;
+                // controller.animateCamera(CameraUpdate.newCameraPosition(const CameraPosition(target: LatLng(6.26, -65), zoom: 14)));
                 setState(() {
                 
               });
@@ -67,6 +80,12 @@ class _VistaWidgetState extends State<VistaWidget> {
               position: PopupMenuPosition.under,
               // Callback that sets the selected popup menu item.
               onSelected: (Menu item) {
+                if(item == Menu.itemOne){
+                  Navigator.pushNamed(context, "perfil");
+                }
+                if(item == Menu.itemFour){
+                  Navigator.pushReplacementNamed(context, "login");
+                }
                 setState(() {
                   _selectedMenu = item.name;
                 });
@@ -78,18 +97,28 @@ class _VistaWidgetState extends State<VistaWidget> {
                     ),
                     const PopupMenuItem<Menu>(
                       value: Menu.itemTwo,
-                      child: Text('Item 2'),
+                      child: Text('Estadísticas'),
                     ),
                     const PopupMenuItem<Menu>(
                       value: Menu.itemThree,
-                      child: Text('Item 3'),
+                      child: Text('Contactos'),
                     ),
                     const PopupMenuItem<Menu>(
                       value: Menu.itemFour,
-                      child: Text('Item 4'),
+                      child: Text('Cerrar sesión'),
                     ),
                   ])],),
-                  body: MapsWidget(positionUser: positionUser),
+                  body: FutureBuilder(
+                    future: userEvents.listarEventos(),
+                    builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+                      if (snapshot.hasData) {
+                        print(snapshot.data);
+                        return MapsWidget(controllerMap: controllerMap);
+                      } else {
+                        return const Center(child: CircularProgressIndicator(),);
+                      }
+                      },)
+                  // body: widget(child: MapsWidget(controllerMap: controllerMap,)),
       )
         //           const TabBarView(
         //             children: [

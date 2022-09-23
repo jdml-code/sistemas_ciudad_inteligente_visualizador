@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:visualizador_eventos/widgets/tituloVista_widget.dart';
 import 'package:visualizador_eventos/widgets/titulo_widget.dart';
 import '../services/service_ingreso.dart';
@@ -41,7 +42,7 @@ class SiginWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const TituloVista(mensaje: 'Registrarse'),
-              const TituloWidget(mensaje: 'Nombre', icono: Icon(Icons.person)),
+              const TituloWidget(mensaje: 'Usuario', icono: Icon(Icons.person)),
               IngresoDato(varController: userController, autocorrector: false, ocultarTexto: false, mensaje: "Ingrese su nombre", tipoTeclado: TextInputType.text),
               const TituloWidget(mensaje: 'Correo', icono: Icon(Icons.mail)),
               IngresoDato(varController: correoController, autocorrector: false, ocultarTexto: false, mensaje: "Ingrese su correo", tipoTeclado: TextInputType.emailAddress),
@@ -56,10 +57,23 @@ class SiginWidget extends StatelessWidget {
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             primary: const Color.fromARGB(255, 144, 202, 249)),
-                        onPressed: () {
-                          ingresoService.registro(userController.text,
+                        onPressed: () async {
+                          final register = await ingresoService.registro(userController.text,
                               passController.text, correoController.text);
+                          if(register){
                               Navigator.pushNamed(context, "otp", arguments: [userController.text, correoController.text]);
+                          }
+                          else{
+                            Fluttertoast.showToast(
+                            msg: "Usuario o correo ya se encuentra registrado",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.lightBlueAccent,
+                            textColor: Colors.white,
+                            fontSize: 16.0
+                          );
+                          }
                         },
                         child: const Text("Crear cuenta",
                         style: TextStyle(fontSize: 20),)),

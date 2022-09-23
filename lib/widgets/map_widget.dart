@@ -1,33 +1,37 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:visualizador_eventos/pages/map_controller.dart';
+import '../user_preferences/user_preferences.dart';
 
 class MapsWidget extends StatefulWidget {
-  const MapsWidget({super.key, required this.positionUser});
-  final LatLng positionUser;
+  const MapsWidget({super.key, required this.controllerMap});
+  final Completer<GoogleMapController> controllerMap;
+  // final List<dynamic> markerUser;
 
   @override
   State<MapsWidget> createState() => _MapsWidgetState();
 }
 
 class _MapsWidgetState extends State<MapsWidget> {
-  final _controller = MapController();
-
-  
-
-  final Completer<GoogleMapController> controller = Completer();
+  final prefs = PreferenciasUsuario();
+  Set<Marker> markers = <Marker>{};
 
   @override
   Widget build(BuildContext context) {
     return GoogleMap(
-      markers: _controller.markers,
+      initialCameraPosition: CameraPosition(target: LatLng(double.parse(prefs.position[0]),double.parse(prefs.position[1])), zoom: 14),
       myLocationButtonEnabled: true,
       myLocationEnabled: true,
-      initialCameraPosition: _controller.initialCameraPosition,
-      onTap: _controller.onTapI,
+      markers: markers,
+      onMapCreated: (GoogleMapController controller) { //method called when map is created
+        widget.controllerMap.complete(controller);
+      // markers.clear();
+      // markers.add(Marker(markerId: const MarkerId('currentLocation'),position: LatLng(double.parse(widget.markerUser[3][0]), double.parse(widget.markerUser[3][1]))));
+
+    },
+    // mapController?.animateCamera(CameraUpdate.newLatLngZoom(LatLng(double.parse(prefs.position[0]), double.parse(prefs.position[1])), zoom: 14)),
+      
+      
       );
   }
 }

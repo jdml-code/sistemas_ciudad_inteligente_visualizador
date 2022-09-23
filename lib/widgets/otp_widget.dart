@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/otp_field_style.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:visualizador_eventos/widgets/tituloVista_widget.dart';
-import 'package:visualizador_eventos/widgets/titulo_widget.dart';
 import '../services/service_ingreso.dart';
-import 'ingresoDato_widget.dart';
+
 
 class OTPWidget extends StatelessWidget {
   const OTPWidget({super.key});
@@ -42,9 +42,24 @@ class OTPWidget extends StatelessWidget {
               ),
               textFieldAlignment: MainAxisAlignment.spaceEvenly,
               fieldStyle: FieldStyle.box,
-              onCompleted: (pin) {
-                ingresoService.otp(pin, args[0]);
-                Navigator.pushNamed(context, "login");
+              onCompleted: (pin) async {
+                final result = await ingresoService.otp(pin, args[0]);
+                if(result){
+                  Navigator.pushNamed(context, "login");
+                }
+                else{
+                  Fluttertoast.showToast(
+                            msg: "El código no corresponde al enviado",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.lightBlueAccent,
+                            textColor: Colors.white,
+                            fontSize: 16.0
+                          );
+                  Navigator.pushNamed(context, "otp");
+                }
+                
               }
             ),
             ],

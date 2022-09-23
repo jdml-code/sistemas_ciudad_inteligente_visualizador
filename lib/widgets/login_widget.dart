@@ -1,6 +1,9 @@
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:visualizador_eventos/services/service_ingreso.dart';
+// import 'package:visualizador_eventos/widgets/alert_widget.dart';
 import 'package:visualizador_eventos/widgets/ingresoDato_widget.dart';
 import 'package:visualizador_eventos/widgets/tituloVista_widget.dart';
 import 'package:visualizador_eventos/widgets/titulo_widget.dart';
@@ -16,6 +19,7 @@ class LoginWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final prefs = PreferenciasUsuario();
     final ingresoServices = IngresoService();
+
     return SafeArea(
       child: SizedBox(
         width: double.infinity,
@@ -36,10 +40,26 @@ class LoginWidget extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         primary: const Color.fromARGB(255, 144, 202, 249)
                       ),
-                      onPressed: (){
-                        // ingresoServices.login(userController.text, passController.text);
-                        Navigator.pushReplacementNamed(context, "vista"); //con este no deja regresar al formulario de login
-                        // sino que se cierra la app. Se puede controlar y poner otra ventana ¿Seguro que quiere salir?
+                      
+                      onPressed: () async {
+                        Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+                        prefs.position = [position.latitude.toString(), position.longitude.toString()];
+                        final ingreso = await ingresoServices.login(userController.text, passController.text);
+                        
+                        if(ingreso.isNotEmpty){
+                          Navigator.pushReplacementNamed(context, "vista"); 
+                        }
+                        else{
+                          Fluttertoast.showToast(
+                            msg: "Usuario o contraseña incorrecto",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.lightBlueAccent,
+                            textColor: Colors.white,
+                            fontSize: 16.0
+                          );
+                        }
                       },
                       child: const Text("Ingresar",
                       style: TextStyle(fontSize: 20),)),
